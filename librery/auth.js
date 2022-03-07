@@ -18,4 +18,29 @@ const hashCompare = async (password, hashValue) => {
     }
 }
 
-module.exports = {hashing, hashCompare}
+const role = async(req, res, next)=> {
+    switch(req.body.role){
+        case 1:console.log('Admin')
+               next();
+               break;
+        case 2:console.log('Student')
+               next();
+               break;
+        default: res.send({
+            message: "Invalid Role, 1-Admin and 2-Student"
+        })
+        break; 
+    }   
+}
+
+const adminrole = async(req, res, next) => {
+    if(req.body.role == 1){
+        next();
+    }else{
+        res.send({
+            message: "Permission Denied"
+        })
+    }
+}
+
+module.exports = {hashing, hashCompare, role, adminrole}
